@@ -4,7 +4,7 @@
       <h1>Editing Book</h1>
       <%= form_with model: @book do |f| %>
         <p class="mb-1">Title</p>
-        <%= f.text_field :title, autofocus: true, class: "form-control mb-3" %>
+        <%= f.text_field :title, class: "form-control mb-3" %>
         <p class="mb-1">Opinion</p>
         <%= f.text_area :body, class: "form-control mb-3" %>
         <%= f.submit 'Update Book', class: "btn btn-success mb-3" %>
