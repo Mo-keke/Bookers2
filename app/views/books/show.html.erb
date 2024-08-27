@@ -1,29 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-3">
-      <h2 class="mt-3">User info</h2>
-      <%= image_tag @user.get_profile_image(100, 100) %>
-      <table class="col-12">
-        <tr class="border-top border-bottom">
-          <th class="p-3">name</th>
-          <td class="p-3"><%= @user.name %></td>
-        </tr>
-        <tr>
-          <th class="p-3">introduction</th>
-          <td class="p-3"><%= @user.introduction %></td>
-        </tr>
-      </table>
-      <%= link_to edit_user_path(@user.id) do %>
-        <button class="btn btn-outline-secondary btn-block mt-3 mb-5"><i class="fa-solid fa-user-gear"></i></button>
-      <% end %>
-      <h2>New Book</h2>
-      <%= form_with model: @book do |f| %>
-        <p class="mb-1">Title</p>
-        <%= f.text_field :title, class: "form-control mb-3" %>
-        <p class="mb-1">Opinion</p>
-        <%= f.text_area :body, class: "form-control mb-3" %>
-        <%= f.submit 'Create Book', class: "btn btn-success" %>
-      <% end %>
+      <%= render 'sidebar_left', user: @user, book: @book %>
     </div>
 
     <div class="col-md-8 offset-md-1">
@@ -31,27 +9,27 @@
       <table class="col-12">
         <tr class="border-top">
           <td class="col-2 p-2">
-            <%= link_to user_path(@book.user.id) do %>
-              <p class="mb-0"><%= image_tag @book.user.get_profile_image(100, 100) %></p>
-              <p><%= @book.user.name %></p>
+            <%= link_to user_path(@user.id) do %>
+              <p class="mb-0"><%= image_tag @user.get_profile_image(100, 100) %></p>
+              <p><%= @user.name %></p>
             <% end %>
           </td>
           <td class="col-3 align-top p-2">
-            <%= link_to book_path(@book.id) do %>
-              <%= @book.title %>
+            <%= link_to book_path(@chosen_book.id) do %>
+              <%= @chosen_book.title %>
             <% end %>
           </td>
           <td class="align-top p-2">
-            <%= @book.body %>
+            <%= @chosen_book.body %>
           </td>
-          <% if @book.user.id == current_user.id %>
+          <% if @user.id == current_user.id %>
             <td class="align-top p-2">
-              <%= link_to edit_book_path(@book.id) do %>
+              <%= link_to edit_book_path(@chosen_book.id) do %>
                 <button class="btn btn-success btn-sm">Edit</button>
               <% end %>
             </td>
             <td class="align-top p-2">
-              <%= link_to book_path(@book.id), method: :delete do %>
+              <%= link_to book_path(@chosen_book.id), method: :delete, "data-confirm" => "本当に消しますか？" do %>
                 <button class="btn btn-danger btn-sm">Destroy</button>
               <% end %>
             </td>
